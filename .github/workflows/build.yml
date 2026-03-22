@@ -1,6 +1,10 @@
 name: pr-deployment
 run-name: ${{github.actor}} updated
-on: push
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
 jobs: 
   compile:
     name: Compilation Step
@@ -17,8 +21,11 @@ jobs:
             fqbn: arduino:avr:uno
             sketch-paths: |
               ./src
+            cli-compile-flags: |
+              - --output-dir
+              - build
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: compiled-binary
-          path: iot_projects
+          path: build/*.hex
