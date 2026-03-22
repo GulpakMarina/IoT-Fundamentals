@@ -10,7 +10,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Install Arduino CLI
-        uses: arduino/compile-sketches@v1
+        uses: arduino/setup-arduino-cli@v2
       - name: Compile sketch for Arduino UNO
         uses: arduino/compile-sketches@v1
         with:
