@@ -9,9 +9,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Compile C code
-        run: |
-          gcc -o iot_projects *.c
+      - name: Install Arduino CLI
+        uses: arduino/compile-sketches@v1
+      - name: Compile sketch for Arduino UNO
+        uses: arduino/compile-sketches@v1
+        with:
+            fqbn: arduino:avr:uno
+            sketch-paths: |
+              ./src
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
