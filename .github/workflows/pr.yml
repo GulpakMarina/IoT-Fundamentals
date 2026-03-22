@@ -1,0 +1,19 @@
+name: pr-deployment
+run-name: ${{github.actor}} updated
+on: push
+jobs: 
+  compile:
+    name: Compilation Step
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Compile C code
+        run: |
+          gcc -o iot_projects *.c
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-binary
+          path: iot_projects
