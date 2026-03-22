@@ -23,6 +23,7 @@ jobs:
       - name: Compile Sketch
         run: |
           arduino-cli compile --fqbn arduino:avr:uno --output-dir ./build ./src/led
+          
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
