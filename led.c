@@ -18,10 +18,8 @@ void setup() {
 
 void loop() {
 
-  bool buttonState = digitalRead(buttonPin);
+  while (digitalRead(buttonPin) == LOW) {
 
-  if (buttonState == LOW && lastButtonState == HIGH) {
-    
     state++;
 
     if (state > 3) {
@@ -29,9 +27,10 @@ void loop() {
     }
 
     updateLEDs();
+    
+    delay(200);
   }
 
-  lastButtonState = buttonState;
 }
 
 void updateLEDs() {
