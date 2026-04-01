@@ -1,0 +1,31 @@
+name: pr-deployment
+run-name: ${{github.actor}} updated
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+jobs: 
+  compile:
+    name: Compilation Step
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install Arduino CLI
+        uses: arduino/setup-arduino-cli@v2
+      - name: Install Platform and Libraries
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr
+
+      - name: Compile Sketch
+        run: |
+          arduino-cli compile --fqbn arduino:avr:uno --output-dir ./build ./src/led
+          
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-binary
+          path: build/*.hex
